@@ -19,7 +19,7 @@ spring:
 
 # ✅ JWT secret key (MUST MATCH Gateway)
 jwt:
-  secret: "AbhishekEmsJwtSecretKeyBase64"
+  secret: "bXlTdXBlclNlY3JldEtleU1pY3Jvc2VydmljZXMyMDI1QGFCaGlzaGVr"
 
 eureka:
   client:
