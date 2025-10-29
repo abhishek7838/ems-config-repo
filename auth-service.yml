@@ -6,7 +6,7 @@ spring:
     name: AUTH-SERVICE
 
   datasource:
-    url: jdbc:mysql://localhost:3306/auth_db?createDatabaseIfNotExist=true
+    url: jdbc:mysql://localhost:3306/auth_db?createDatabaseIfNotExist=true&useSSL=false
     username: root
     password: Abhimydbqw@1234
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -16,6 +16,10 @@ spring:
       ddl-auto: update
     show-sql: true
     open-in-view: false
+
+# ✅ JWT secret key (MUST MATCH Gateway)
+jwt:
+  secret: "AbhishekEmsJwtSecretKeyBase64"
 
 eureka:
   client:
