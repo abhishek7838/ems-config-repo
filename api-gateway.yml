@@ -5,77 +5,58 @@ spring:
   application:
     name: API-GATEWAY
 
-  # ✅ Disable compatibility verifier for Spring Cloud versions
   cloud:
-    compatibility-verifier:
-      enabled: false
-
     gateway:
-      discovery:
-        locator:
-          enabled: true
-          lower-case-service-id: true
-
-      globalcors:
-        cors-configurations:
-          '[/**]':
-            allowed-origins:
-              - "http://localhost:5173"    # ✅ Allow frontend
-            allowed-methods:
-              - GET
-              - POST
-              - PUT
-              - DELETE
-              - OPTIONS
-            allowed-headers: "*"
-            allow-credentials: true
-
       routes:
-        - id: AUTH-SERVICE
+        - id: auth-service
           uri: lb://AUTH-SERVICE
           predicates:
             - Path=/api/auth/**
+          # ✅ Auth routes are public, no JWT filter
           filters:
-            - StripPrefix=1
+            - RemoveRequestHeader=Cookie
 
-        - id: USER-SERVICE
+        - id: user-service
           uri: lb://USER-SERVICE
           predicates:
             - Path=/api/users/**
           filters:
-            - StripPrefix=1
+            - name: JwtAuthenticationFilter
 
-        - id: PRODUCT-SERVICE
-          uri: lb://PRODUCT-SERVICE
-          predicates:
-            - Path=/api/products/**
-          filters:
-            - StripPrefix=1
-
-        - id: ORDER-SERVICE
+        - id: order-service
           uri: lb://ORDER-SERVICE
           predicates:
             - Path=/api/orders/**
           filters:
-            - StripPrefix=1
+            - name: JwtAuthenticationFilter
 
-        - id: INVENTORY-SERVICE
+        - id: product-service
+          uri: lb://PRODUCT-SERVICE
+          predicates:
+            - Path=/api/products/**
+          filters:
+            - name: JwtAuthenticationFilter
+
+        - id: inventory-service
           uri: lb://INVENTORY-SERVICE
           predicates:
             - Path=/api/inventory/**
           filters:
-            - StripPrefix=1
+            - name: JwtAuthenticationFilter
 
-        - id: NOTIFICATION-SERVICE
+        - id: notification-service
           uri: lb://NOTIFICATION-SERVICE
           predicates:
             - Path=/api/notifications/**
           filters:
-            - StripPrefix=1
+            - name: JwtAuthenticationFilter
 
-# ✅ JWT Secret (must match Auth-Service)
-jwt:
-  secret: "bXlTdXBlclNlY3JldEtleU1pY3Jvc2VydmljZXMyMDI1QGFCaGlzaGVr"
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowed-origins: "*"
+            allowed-headers: "*"
+            allowed-methods: "*"
 
 eureka:
   client:
@@ -85,6 +66,9 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
   instance:
     prefer-ip-address: true
+
+jwt:
+  secret: "bXlTdXBlclNlY3JldEtleU1pY3Jvc2VydmljZXMyMDI1QGFCaGlzaGVr"
 
 management:
   endpoints:
