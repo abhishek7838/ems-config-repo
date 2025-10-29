@@ -7,6 +7,11 @@ spring:
 
   cloud:
     gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+
       routes:
         - id: auth-service
           uri: lb://AUTH-SERVICE
@@ -53,9 +58,19 @@ spring:
       globalcors:
         cors-configurations:
           '[/**]':
-            allowed-origins: "*"
+            allowed-origins:
+              - "http://localhost:5173"
             allowed-headers: "*"
-            allowed-methods: "*"
+            allowed-methods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allow-credentials: true
+
+jwt:
+  secret: "bXlTXDxbLcNlYJ3JldteUlhpZC2Vdy1jZXMyMDI1QGFcaGZvaGVr"
 
 eureka:
   client:
@@ -65,9 +80,6 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
   instance:
     prefer-ip-address: true
-
-jwt:
-  secret: "bXlTdXBlclNlY3JldEtleU1pY3Jvc2VydmljZXMyMDI1QGFCaGlzaGVr"
 
 management:
   endpoints:
