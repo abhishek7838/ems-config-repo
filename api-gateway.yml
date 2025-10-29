@@ -12,7 +12,6 @@ spring:
           uri: lb://AUTH-SERVICE
           predicates:
             - Path=/api/auth/**
-          # ✅ Auth routes are public, no JWT filter
           filters:
             - RemoveRequestHeader=Cookie
 
@@ -23,17 +22,17 @@ spring:
           filters:
             - name: JwtAuthenticationFilter
 
-        - id: order-service
-          uri: lb://ORDER-SERVICE
-          predicates:
-            - Path=/api/orders/**
-          filters:
-            - name: JwtAuthenticationFilter
-
         - id: product-service
           uri: lb://PRODUCT-SERVICE
           predicates:
             - Path=/api/products/**
+          filters:
+            - name: JwtAuthenticationFilter
+
+        - id: order-service
+          uri: lb://ORDER-SERVICE
+          predicates:
+            - Path=/api/orders/**
           filters:
             - name: JwtAuthenticationFilter
 
