@@ -13,6 +13,7 @@ spring:
           lower-case-service-id: true
 
       routes:
+        # ✅ Auth-Service route (public)
         - id: AUTH-SERVICE
           uri: lb://AUTH-SERVICE
           predicates:
@@ -21,46 +22,57 @@ spring:
             - RemoveRequestHeader=Cookie
             - PreserveHostHeader
 
+        # ✅ User-Service route (secured)
         - id: USER-SERVICE
           uri: lb://USER-SERVICE
           predicates:
             - Path=/api/users/**
           filters:
+            - JwtAuthenticationFilter
             - RemoveRequestHeader=Cookie
             - PreserveHostHeader
 
+        # ✅ Product-Service route (secured)
         - id: PRODUCT-SERVICE
           uri: lb://PRODUCT-SERVICE
           predicates:
             - Path=/api/products/**
           filters:
+            - JwtAuthenticationFilter
             - RemoveRequestHeader=Cookie
             - PreserveHostHeader
 
+        # ✅ Order-Service route (secured)
         - id: ORDER-SERVICE
           uri: lb://ORDER-SERVICE
           predicates:
             - Path=/api/orders/**
           filters:
+            - JwtAuthenticationFilter
             - RemoveRequestHeader=Cookie
             - PreserveHostHeader
 
+        # ✅ Inventory-Service route (secured)
         - id: INVENTORY-SERVICE
           uri: lb://INVENTORY-SERVICE
           predicates:
             - Path=/api/inventory/**
           filters:
+            - JwtAuthenticationFilter
             - RemoveRequestHeader=Cookie
             - PreserveHostHeader
 
+        # ✅ Notification-Service route (secured)
         - id: NOTIFICATION-SERVICE
           uri: lb://NOTIFICATION-SERVICE
           predicates:
             - Path=/api/notifications/**
           filters:
+            - JwtAuthenticationFilter
             - RemoveRequestHeader=Cookie
             - PreserveHostHeader
 
+      # ✅ Global CORS configuration
       globalcors:
         cors-configurations:
           '[/**]':
@@ -74,6 +86,7 @@ spring:
               - OPTIONS
             allow-credentials: true
 
+# ✅ SAME JWT secret as AUTH-SERVICE
 jwt:
   secret: "bXlTdXBlclNlY3JldEtleU1pY3Jvc2VydmljZXMyMDI1QGFCaGlzaGVr"
 
