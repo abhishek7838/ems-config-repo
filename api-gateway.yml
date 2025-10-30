@@ -13,53 +13,65 @@ spring:
           lower-case-service-id: true
 
       routes:
-        - id: auth-service
+        # ✅ Auth-Service (public routes)
+        - id: AUTH-SERVICE
           uri: lb://AUTH-SERVICE
           predicates:
             - Path=/api/auth/**
           filters:
             - RemoveRequestHeader=Cookie
+            - PreserveHostHeader
 
-        - id: user-service
+        # ✅ User-Service
+        - id: USER-SERVICE
           uri: lb://USER-SERVICE
           predicates:
             - Path=/api/users/**
           filters:
-            - name: JwtAuthenticationFilter
+            - RemoveRequestHeader=Cookie
+            - PreserveHostHeader
 
-        - id: product-service
+        # ✅ Product-Service
+        - id: PRODUCT-SERVICE
           uri: lb://PRODUCT-SERVICE
           predicates:
             - Path=/api/products/**
           filters:
-            - name: JwtAuthenticationFilter
+            - RemoveRequestHeader=Cookie
+            - PreserveHostHeader
 
-        - id: order-service
+        # ✅ Order-Service
+        - id: ORDER-SERVICE
           uri: lb://ORDER-SERVICE
           predicates:
             - Path=/api/orders/**
           filters:
-            - name: JwtAuthenticationFilter
+            - RemoveRequestHeader=Cookie
+            - PreserveHostHeader
 
-        - id: inventory-service
+        # ✅ Inventory-Service
+        - id: INVENTORY-SERVICE
           uri: lb://INVENTORY-SERVICE
           predicates:
             - Path=/api/inventory/**
           filters:
-            - name: JwtAuthenticationFilter
+            - RemoveRequestHeader=Cookie
+            - PreserveHostHeader
 
-        - id: notification-service
+        # ✅ Notification-Service
+        - id: NOTIFICATION-SERVICE
           uri: lb://NOTIFICATION-SERVICE
           predicates:
             - Path=/api/notifications/**
           filters:
-            - name: JwtAuthenticationFilter
+            - RemoveRequestHeader=Cookie
+            - PreserveHostHeader
 
+      # ✅ Global CORS
       globalcors:
         cors-configurations:
           '[/**]':
-            allowed-origins:
-              - "http://localhost:5173"
+            allowed-origins: "http://localhost:5173"
             allowed-headers: "*"
             allowed-methods:
               - GET
