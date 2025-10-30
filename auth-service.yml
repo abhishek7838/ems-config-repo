@@ -17,7 +17,6 @@ spring:
     show-sql: true
     open-in-view: false
 
-# ✅ JWT secret key (MUST MATCH Gateway)
 jwt:
   secret: "bXlTdXBlclNlY3JldEtleU1pY3Jvc2VydmljZXMyMDI1QGFCaGlzaGVr"
 
