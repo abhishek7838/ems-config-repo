@@ -13,7 +13,6 @@ spring:
           lower-case-service-id: true
 
       routes:
-        # ✅ Auth-Service (public routes)
         - id: AUTH-SERVICE
           uri: lb://AUTH-SERVICE
           predicates:
@@ -22,7 +21,6 @@ spring:
             - RemoveRequestHeader=Cookie
             - PreserveHostHeader
 
-        # ✅ User-Service
         - id: USER-SERVICE
           uri: lb://USER-SERVICE
           predicates:
@@ -31,7 +29,6 @@ spring:
             - RemoveRequestHeader=Cookie
             - PreserveHostHeader
 
-        # ✅ Product-Service
         - id: PRODUCT-SERVICE
           uri: lb://PRODUCT-SERVICE
           predicates:
@@ -40,7 +37,6 @@ spring:
             - RemoveRequestHeader=Cookie
             - PreserveHostHeader
 
-        # ✅ Order-Service
         - id: ORDER-SERVICE
           uri: lb://ORDER-SERVICE
           predicates:
@@ -49,7 +45,6 @@ spring:
             - RemoveRequestHeader=Cookie
             - PreserveHostHeader
 
-        # ✅ Inventory-Service
         - id: INVENTORY-SERVICE
           uri: lb://INVENTORY-SERVICE
           predicates:
@@ -58,7 +53,6 @@ spring:
             - RemoveRequestHeader=Cookie
             - PreserveHostHeader
 
-        # ✅ Notification-Service
         - id: NOTIFICATION-SERVICE
           uri: lb://NOTIFICATION-SERVICE
           predicates:
@@ -67,7 +61,6 @@ spring:
             - RemoveRequestHeader=Cookie
             - PreserveHostHeader
 
-      # ✅ Global CORS
       globalcors:
         cors-configurations:
           '[/**]':
@@ -82,7 +75,7 @@ spring:
             allow-credentials: true
 
 jwt:
-  secret: "bXlTXDxbLcNlYJ3JldteUlhpZC2Vdy1jZXMyMDI1QGFcaGZvaGVr"
+  secret: "bXlTdXBlclNlY3JldEtleU1pY3Jvc2VydmljZXMyMDI1QGFCaGlzaGVr"
 
 eureka:
   client:
